@@ -19,9 +19,9 @@ router.post('/sign-up', async (req, res) => {
 
 
 router.post ('/sign-in',  async (req, res) =>{
-    // return res.json('you are are inside the sign-in route')
+
+    console.log(req.body)
     const {username, password, _id} = req.body
-    // return res.json(`The username is ${username} and the password is ${password}`)
     try {
         const userToLogin = await User.findOne({username:username})
         if(!userToLogin){
@@ -34,9 +34,9 @@ router.post ('/sign-in',  async (req, res) =>{
         }
         
         //Generate the token
-        
+        console.log (`the user id is ${userToLogin._id} and the username is ${username}`)
         const token = jwt.sign(
-            {user: {_id:_id, username:username}}, 
+            {user: {_id:userToLogin._id, username:username}}, 
             process.env.TOKEN_SECRET,
             {expiresIn: '2d'}
         )

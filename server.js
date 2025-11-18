@@ -5,7 +5,7 @@ import cors from 'cors'
 import 'dotenv/config'
 //Routers
 import authRouter from './controllers/auth.js'
-
+ import isSignedIn from './middleware/isSignedIn.js'
 
 //Create the application
 const app = express()
@@ -22,6 +22,9 @@ app.get('/', (req, res) => {
     res.send('Server is running')
 })
 
+app.get('/secure-route', isSignedIn, (req, res) =>{
+ res.json ('you have succesfull passed the isSignedIn verification')
+})
 //Connections
 const connect = async () => {
     try {
